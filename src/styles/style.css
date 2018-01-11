@@ -1,0 +1,19 @@
+#playersTeritory, #enemiesTeritory{
+
+  position: static;
+  height: 500px;
+  width: 500px;
+  margin: 10px 30px 10px 30px;
+  float: left;
+  padding: 0px 0px 0px 0px;
+}
+
+table, tr,td{
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table{
+  width: 500px;
+  height: 500px;
+}
