@@ -54,4 +54,17 @@ describe('player module',()=>{
     expected.forEach(pos=>player.attackedOnOpponentAt(pos));
     assert.deepEqual(expected,player.getAttackedPositions);
   })
+  it('should give the damaged positions of all ships',()=>{
+    let expected = [36,38,25,43,23];
+    expected.forEach((pos)=>player.shipDamagedAt(pos));
+    assert.sameMembers(player.hitPositions,expected);
+  })
+  it('should return undefined when asked for a ship at position where there is no ship',()=>{
+    assert.isUndefined(player.getShipAt(59));
+  });
+  it.skip('should return a ship object when asked to getShip',()=>{
+    let ship = player.getShipAt(37);
+    assert.isObject(ship);
+    assert.include(ship,'name');
+  });
 })
