@@ -3,16 +3,16 @@ class Ship {
     this.name = name;
     this.noOfAttacksToSink = noOfAttacksToSink;
     this.positions = positions;
-    this.damagedPositions = [];
+    this.hitAt = [];
   }
   get isSunk(){
-    return this.damagedPositions.length == this.noOfAttacksToSink;
+    return this.hitAt.length == this.noOfAttacksToSink;
   }
   areYouAt(position){
     return this.positions.includes(position);
   }
   damagedAt(position){
-    this.damagedPositions.push(position);
+    this.hitAt.push(position);
   }
 }
 

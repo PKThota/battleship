@@ -53,6 +53,18 @@ class Player {
     let ship = new Ship(name,noOfModules,positions);
     this.ships[name] = ship;
   }
+  attackedByOpponenentAt(pos){
+    this.opponentAttackedLocations.push(pos);
+  }
+  get getOpponentAttackedLocations(){
+    return this.opponentAttackedLocations;
+  }
+  attackedOnOpponentAt(pos){
+    this.locationsAttacked.push(pos);
+  }
+  get getAttackedPositions(){
+    return this.locationsAttacked;
+  }
 }
 
 module.exports = Player;

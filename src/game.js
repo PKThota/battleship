@@ -1,9 +1,5 @@
 const Player = require('./player');
 
-let hasShipDamaged = function(player,position){
-  return player.doesThePositionOccupied(position);
-}
-
 class Game {
   constructor() {
     this.players = [];
@@ -40,16 +36,21 @@ class Game {
       this._status.winner = currentPlayer;
       this._status.message = `${currentPlayer.name} Won`;
     }else{
-      this._status.message = `${nextPlayer.name}'s turn`;
+      this._status.message = `${currentPlayer.name}'s turn`;
     }
   }
   updatePlayers(){
     this.nextPlayerIndex = this.currentPlayerIndex;
     this.currentPlayerIndex = 1 - this.currentPlayerIndex;
   }
+  storeAttackedPosition(pos){
+    this.currentPlayer.attackedOnOpponentAt(pos);
+    this.nextPlayer.attackedByOpponenentAt(pos);
+  }
   attack(pos){
     let currentPlayer = this.currentPlayer;
     let nextPlayer = this.nextPlayer;
+    this.storeAttackedPosition(pos);
     if(nextPlayer.doesThePositionOccupied(pos)) nextPlayer.shipDamagedAt(pos);
     this.updatePlayers();
     this.updateStatus();
