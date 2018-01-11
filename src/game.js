@@ -13,6 +13,9 @@ class Game {
   addPlayer(name){
     this.players.push(new Player(name));
   }
+  get getPlayers(){
+    return this.players;
+  }
   get currentPlayer(){
     return this.players[this.currentPlayerIndex];
   }
@@ -55,7 +58,6 @@ class Game {
     let currentPlayer = this.currentPlayer;
     let nextPlayer = this.nextPlayer;
     this.storeAttackedPosition(pos);
-    if(nextPlayer.doesThePositionOccupied(pos)) nextPlayer.shipDamagedAt(pos);
     this.updatePlayers();
     this.updateStatus();
   }

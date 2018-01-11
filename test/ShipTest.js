@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const Ship = require('../src/Ship.js');
+const Ship = require('../src/ship.js');
 
 describe("ship should tell about itself",()=>{
   beforeEach(()=>{

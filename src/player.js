@@ -67,6 +67,9 @@ class Player {
   }
   attackedByOpponenentAt(pos){
     this.opponentAttackedLocations.push(pos);
+    if(this.doesThePositionOccupied(pos)){
+      this.shipDamagedAt(pos);
+    }
   }
   attackedOnOpponentAt(pos){
     this.locationsAttacked.push(pos);
