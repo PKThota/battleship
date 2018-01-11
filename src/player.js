@@ -31,6 +31,18 @@ class Player {
   get isLost(){
     return this.sailingShips == 0;
   }
+  get getOpponentAttackedLocations(){
+    return this.opponentAttackedLocations;
+  }
+  get getAttackedPositions(){
+    return this.locationsAttacked;
+  }
+  get hitPositions(){
+    return this.allShips.reduce(function(positions,ship){
+      positions = positions.concat(ship.hitAt);
+      return positions;
+    },[])
+  }
   getShipAt(pos){
     return this.allShips.find((ship)=>{
       return ship.areYouAt(pos);
@@ -56,14 +68,8 @@ class Player {
   attackedByOpponenentAt(pos){
     this.opponentAttackedLocations.push(pos);
   }
-  get getOpponentAttackedLocations(){
-    return this.opponentAttackedLocations;
-  }
   attackedOnOpponentAt(pos){
     this.locationsAttacked.push(pos);
-  }
-  get getAttackedPositions(){
-    return this.locationsAttacked;
   }
 }
 

@@ -38,6 +38,10 @@ class Game {
     }else{
       this._status.message = `${currentPlayer.name}'s turn`;
     }
+    this._status.hitPositions = this.players.reduce(function(hitPositions,player){
+      hitPositions[player.name] = player.hitPositions
+      return hitPositions;
+    },{});
   }
   updatePlayers(){
     this.nextPlayerIndex = this.currentPlayerIndex;
