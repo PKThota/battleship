@@ -1,19 +1,57 @@
-const assert = require('assert');
-const Player = require('../src/Player.js');
+const assert = require('chai').assert;
+const Player = require('../src/player.js');
+const Ship = require('../src/ship.js');
 
-let test = {};
-
-test["addShip should add the ship into the shipsData "] = function(){
-  let player = new Player();
-  player.addShip("submarine",3,[34,35,36]);
-  assert.equal(player.totalShips,1);
+let attack = function(player,positions){
+  positions.forEach(position=>{player.shipDamagedAt(position)});
 }
 
-test["addShip shouldn't add the ship if any of its positions are previously occuiped"] = function(){
-  let player = new Player();
-  player.addShip('submarine',3,[34,35,36]);
-  player.addShip('carrier',3,[24,34,44]);
-  assert.equal(player.totalShips,1);
-}
-
-exports.test = test;
+describe('player module',()=>{
+  beforeEach('creating player',()=>{
+    player = new Player("kalyan");
+    player.addShip('cruiser',3,[15,25,35]);
+    player.addShip('submarine',3,[36,37,38]);
+    player.addShip('Battleship',4,[53,43,33,23]);
+  })
+  it('should return name when asked for name',()=>{
+    assert.equal(player.name,'kalyan');
+  });
+  it('should return the list of ship objects',()=>{
+    let expected = [];
+    expected.push(new Ship('cruiser',3,[15,25,35]));
+    expected.push(new Ship('submarine',3,[36,37,38]));
+    expected.push(new Ship('Battleship',4,[53,43,33,23]));
+    assert.deepEqual(expected,player.allShips);
+  });
+  it('should return the list of sunk ships',()=>{
+    let expected = [];
+    let ship = new Ship('cruiser',3,[15,25,35]);
+    ship.damagedAt(15)
+    ship.damagedAt(25)
+    ship.damagedAt(35)
+    expected.push(ship);
+    attack(player,[15,25,35]);
+    assert.deepEqual(player.getSunkShips,expected);
+  });
+  it('should return the count of sailingShips',()=>{
+    assert.equal(player.sailingShips,3);
+  })
+  it('should lost if all ships are sunk',()=>{
+    attack(player,[15,25,35,36,37,38,53,43,33,23]);
+    assert.isOk(player.isLost);
+  });
+  it('should not lose if not all ships are sunk',()=>{
+    attack(player,[15,25,35,36,37,38,53,43,33]);
+    assert.isNotOk(player.isLost);
+  });
+  it('should give the positions attacked by opponent',()=>{
+    let expected = [53,43,33,32,67,34,32];
+    expected.forEach(pos=>player.attackedByOpponenentAt(pos));
+    assert.deepEqual(player.getOpponentAttackedLocations,expected);
+  })
+  it('should give the positions player attacked',()=>{
+    let expected = [23,42,1,5,65,4,6,20,8];
+    expected.forEach(pos=>player.attackedOnOpponentAt(pos));
+    assert.deepEqual(expected,player.getAttackedPositions);
+  })
+})
