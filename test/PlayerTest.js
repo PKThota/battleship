@@ -62,9 +62,14 @@ describe('player module',()=>{
   it('should return undefined when asked for a ship at position where there is no ship',()=>{
     assert.isUndefined(player.getShipAt(59));
   });
-  it.skip('should return a ship object when asked to getShip',()=>{
+  it('should return a ship object when asked to getShip',()=>{
     let ship = player.getShipAt(37);
-    assert.isObject(ship);
-    assert.include(ship,'name');
+    let expected = {
+      name: 'submarine',
+      noOfAttacksToSink: 3,
+      positions: [ 36, 37, 38 ],
+      damagedPositions: []
+    };
+    assert.deepEqual(ship,expected);
   });
 })
